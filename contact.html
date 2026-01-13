@@ -3,120 +3,119 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>お問い合わせ</title>
+  <title>Contact</title>
 
   <!-- Zen Old Mincho -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --text: #000000;
-      --border: #cccccc;
-      --placeholder: #cccccc;
-      --radius: 4px;          /* 角丸を小さく統一 */
-      --label-size: 18pt;     /* 小見出し */
-      --base-size: 14pt;      /* 標準テキスト */
-      --control-pad-y: 10px;  /* 入力欄とボタンの高さを揃える要 */
-      --control-pad-x: 12px;
-      --control-border: 1px;
+      --text:#000000;
+      --border:#cccccc;
+      --placeholder:#cccccc;
+      --fs:14pt;
+      --radius:4px;     /* 小さめで統一 */
+      --field-h:44px;   /* 入力欄とボタン高さを統一 */
     }
 
     body{
-      margin: 0;
-      font-family: "Zen Old Mincho", serif;
-      color: var(--text);
-      background: transparent;
-      font-size: var(--base-size);
+      margin:0;
+      font-family:"Zen Old Mincho", serif;
+      font-size:var(--fs);
+      color:var(--text);
+      background:transparent;
     }
 
     .wrap{
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 24px;
+      max-width:720px;
+      margin:0 auto;
+      padding:24px;
     }
 
     label{
-      display: block;
-      font-weight: 700; /* Bold */
-      font-size: var(--label-size);
-      margin: 14px 0 8px;
-      line-height: 1.2;
+      display:block;
+      font-size:var(--fs);
+      margin:14px 0 6px;
+      color:var(--text);
     }
 
-    .control,
-    textarea,
-    button{
-      font-family: inherit;
-      font-size: var(--base-size);
-      color: var(--text);
-      box-sizing: border-box;
-      border-radius: var(--radius);
-    }
-
-    .control,
+    input[type="text"],
+    input[type="email"],
     textarea{
-      width: 100%;
-      border: var(--control-border) solid var(--border);
-      padding: var(--control-pad-y) var(--control-pad-x);
-      background: transparent;
-      outline: none;
+      width:100%;
+      box-sizing:border-box;
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:10px 12px;
+      font-family:"Zen Old Mincho", serif;
+      font-size:var(--fs);
+      color:var(--text);
+      background:transparent;
+      outline:none;
+    }
+
+    input[type="text"],
+    input[type="email"]{
+      height:var(--field-h);
     }
 
     textarea{
-      min-height: 160px;
-      resize: vertical;
+      min-height:160px;
+      resize:vertical;
     }
 
-    /* placeholder（英文指示のみ、色 #cccccc） */
     ::placeholder{
-      color: var(--placeholder);
-      opacity: 1;
+      color:var(--placeholder);
+      opacity:1;
     }
 
     .radio-group{
-      display: grid;
-      gap: 10px;
-      margin-top: 8px;
+      display:grid;
+      gap:8px;
+      margin-top:6px;
     }
 
     .radio-item{
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      font-size: var(--base-size);
-      line-height: 1.35;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      font-size:var(--fs);
+      color:var(--text);
     }
 
+    /* ラジオを少し整える */
     .radio-item input[type="radio"]{
-      margin-top: 4px;
-      accent-color: var(--text);
+      margin-top:3px;
     }
 
     .actions{
-      margin-top: 18px;
-      display: flex;
-      justify-content: flex-start;
+      margin-top:18px;
     }
 
     button{
-      border: var(--control-border) solid var(--text);
-      background: transparent; /* 塗りなし */
-      padding: var(--control-pad-y) 28px; /* 幅を長めに */
-      cursor: pointer;
-      line-height: 1; /* 高さの安定化 */
+      height:var(--field-h);
+      width:220px;               /* 少し長め */
+      border:1px solid var(--text);
+      border-radius:var(--radius);
+      background:transparent;
+      color:var(--text);
+      font-family:"Zen Old Mincho", serif;
+      font-size:var(--fs);
+      cursor:pointer;
+      padding:0 18px;
     }
 
-    /* disabled時の見え方（アウトラインは残しつつ薄く） */
     button:disabled{
-      opacity: 0.35;
-      cursor: not-allowed;
+      opacity:.35;
+      cursor:not-allowed;
     }
 
     .status{
-      margin-top: 12px;
-      font-size: var(--base-size);
+      font-size:var(--fs);
+      margin-top:12px;
+      color:var(--text);
     }
   </style>
 </head>
@@ -124,61 +123,56 @@
 <body>
   <div class="wrap">
     <form id="contactForm">
-      <label for="name">お名前 / Name</label>
+      <label for="name">Name</label>
       <input
         id="name"
         name="name"
-        class="control"
         type="text"
-        required
         placeholder="Please enter your full name."
-        autocomplete="name"
+        required
       />
 
-      <label for="email">メールアドレス / Email</label>
+      <label for="email">Email</label>
       <input
         id="email"
         name="email"
-        class="control"
         type="email"
-        required
         placeholder="Please enter your email address."
-        autocomplete="email"
+        required
       />
 
-      <label>お問い合わせの種類 / Inquiry Type</label>
+      <label>Category</label>
       <div class="radio-group">
         <label class="radio-item">
           <input type="radio" name="category" value="古材ご購入のご相談" required />
-          古材ご購入のご相談
+          Purchase inquiry (reclaimed materials)
         </label>
         <label class="radio-item">
           <input type="radio" name="category" value="古材レスキューご依頼" required />
-          古材レスキューご依頼
+          Reclaimed material rescue request
         </label>
         <label class="radio-item">
           <input type="radio" name="category" value="活動に関するご質問" required />
-          活動に関するご質問
+          Questions about our activities
         </label>
         <label class="radio-item">
           <input type="radio" name="category" value="その他" required />
-          その他
+          Other
         </label>
       </div>
 
-      <label for="message">お問い合わせ内容 / Message</label>
+      <label for="message">Message</label>
       <textarea
         id="message"
         name="message"
+        placeholder="Please describe your inquiry in detail."
         required
-        placeholder="Please write your inquiry in detail (e.g., item code, quantity, preferred schedule)."
       ></textarea>
 
       <div class="actions">
-        <button id="submitBtn" type="submit" disabled>送信 / Send</button>
+        <button id="submitBtn" type="submit" disabled>Send</button>
+        <div id="status" class="status"></div>
       </div>
-
-      <div id="status" class="status"></div>
     </form>
   </div>
 
@@ -206,7 +200,7 @@
       if (!isValid()) return;
 
       btn.disabled = true;
-      statusEl.textContent = "送信中...";
+      statusEl.textContent = "Sending...";
 
       const payload = {
         name: form.name.value.trim(),
@@ -225,11 +219,11 @@
         const json = await res.json().catch(() => ({}));
         if (!json.ok) throw new Error("send_failed");
 
-        statusEl.textContent = "送信しました。受付完了メールをご確認ください。";
+        statusEl.textContent = "Sent. Please check your confirmation email.";
         form.reset();
 
       } catch (err) {
-        statusEl.textContent = "送信に失敗しました。時間をおいて再度お試しください。";
+        statusEl.textContent = "Failed to send. Please try again later.";
       } finally {
         updateButton();
       }
