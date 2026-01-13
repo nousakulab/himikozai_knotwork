@@ -4,46 +4,180 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>お問い合わせ</title>
+
+  <!-- Zen Old Mincho -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
-    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:transparent}
-    .wrap{max-width:720px;margin:0 auto;padding:24px}
-    label{display:block;font-size:14px;margin:14px 0 6px}
-    input[type="text"],input[type="email"],textarea{
-      width:100%;box-sizing:border-box;padding:10px;font-size:14px;
-      border:1px solid #cfcfcf;border-radius:8px
+    :root{
+      --text: #000000;
+      --border: #cccccc;
+      --placeholder: #cccccc;
+      --radius: 4px;          /* 角丸を小さく統一 */
+      --label-size: 18pt;     /* 小見出し */
+      --base-size: 14pt;      /* 標準テキスト */
+      --control-pad-y: 10px;  /* 入力欄とボタンの高さを揃える要 */
+      --control-pad-x: 12px;
+      --control-border: 1px;
     }
-    textarea{min-height:140px;resize:vertical}
-    .radio-group{display:grid;gap:8px;margin-top:6px}
-    .radio-item{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+
+    body{
+      margin: 0;
+      font-family: "Zen Old Mincho", serif;
+      color: var(--text);
+      background: transparent;
+      font-size: var(--base-size);
+    }
+
+    .wrap{
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    label{
+      display: block;
+      font-weight: 700; /* Bold */
+      font-size: var(--label-size);
+      margin: 14px 0 8px;
+      line-height: 1.2;
+    }
+
+    .control,
+    textarea,
     button{
-      margin-top:18px;padding:12px 18px;font-size:14px;border:0;border-radius:10px;
-      background:#000;color:#fff;cursor:pointer
+      font-family: inherit;
+      font-size: var(--base-size);
+      color: var(--text);
+      box-sizing: border-box;
+      border-radius: var(--radius);
     }
-    button:disabled{opacity:.35;cursor:not-allowed}
-    .status{font-size:14px;margin-top:12px}
+
+    .control,
+    textarea{
+      width: 100%;
+      border: var(--control-border) solid var(--border);
+      padding: var(--control-pad-y) var(--control-pad-x);
+      background: transparent;
+      outline: none;
+    }
+
+    textarea{
+      min-height: 160px;
+      resize: vertical;
+    }
+
+    /* placeholder（英文指示のみ、色 #cccccc） */
+    ::placeholder{
+      color: var(--placeholder);
+      opacity: 1;
+    }
+
+    .radio-group{
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .radio-item{
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: var(--base-size);
+      line-height: 1.35;
+    }
+
+    .radio-item input[type="radio"]{
+      margin-top: 4px;
+      accent-color: var(--text);
+    }
+
+    .actions{
+      margin-top: 18px;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    button{
+      border: var(--control-border) solid var(--text);
+      background: transparent; /* 塗りなし */
+      padding: var(--control-pad-y) 28px; /* 幅を長めに */
+      cursor: pointer;
+      line-height: 1; /* 高さの安定化 */
+    }
+
+    /* disabled時の見え方（アウトラインは残しつつ薄く） */
+    button:disabled{
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .status{
+      margin-top: 12px;
+      font-size: var(--base-size);
+    }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <form id="contactForm">
-      <label for="name">1 お名前</label>
-      <input id="name" name="name" type="text" required />
+      <label for="name">お名前 / Name</label>
+      <input
+        id="name"
+        name="name"
+        class="control"
+        type="text"
+        required
+        placeholder="Please enter your full name."
+        autocomplete="name"
+      />
 
-      <label for="email">2 メールアドレス</label>
-      <input id="email" name="email" type="email" required />
+      <label for="email">メールアドレス / Email</label>
+      <input
+        id="email"
+        name="email"
+        class="control"
+        type="email"
+        required
+        placeholder="Please enter your email address."
+        autocomplete="email"
+      />
 
-      <label>3 お問い合わせの種類</label>
+      <label>お問い合わせの種類 / Inquiry Type</label>
       <div class="radio-group">
-        <label class="radio-item"><input type="radio" name="category" value="古材ご購入のご相談" required />古材ご購入のご相談</label>
-        <label class="radio-item"><input type="radio" name="category" value="古材レスキューご依頼" required />古材レスキューご依頼</label>
-        <label class="radio-item"><input type="radio" name="category" value="活動に関するご質問" required />活動に関するご質問</label>
-        <label class="radio-item"><input type="radio" name="category" value="その他" required />その他</label>
+        <label class="radio-item">
+          <input type="radio" name="category" value="古材ご購入のご相談" required />
+          古材ご購入のご相談
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="category" value="古材レスキューご依頼" required />
+          古材レスキューご依頼
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="category" value="活動に関するご質問" required />
+          活動に関するご質問
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="category" value="その他" required />
+          その他
+        </label>
       </div>
 
-      <label for="message">4 お問い合わせ内容</label>
-      <textarea id="message" name="message" required></textarea>
+      <label for="message">お問い合わせ内容 / Message</label>
+      <textarea
+        id="message"
+        name="message"
+        required
+        placeholder="Please write your inquiry in detail (e.g., item code, quantity, preferred schedule)."
+      ></textarea>
 
-      <button id="submitBtn" type="submit" disabled>送信</button>
+      <div class="actions">
+        <button id="submitBtn" type="submit" disabled>送信 / Send</button>
+      </div>
+
       <div id="status" class="status"></div>
     </form>
   </div>
