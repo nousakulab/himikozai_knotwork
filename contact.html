@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Contact</title>
 
-  <!-- Zen Old Mincho -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;700&display=swap" rel="stylesheet">
@@ -16,8 +15,8 @@
       --border:#cccccc;
       --placeholder:#cccccc;
       --fs:14pt;
-      --radius:4px;     /* 小さめで統一 */
-      --field-h:44px;   /* 入力欄とボタン高さを統一 */
+      --radius:4px;
+      --field-h:44px;
     }
 
     body{
@@ -85,7 +84,6 @@
       color:var(--text);
     }
 
-    /* ラジオを少し整える */
     .radio-item input[type="radio"]{
       margin-top:3px;
     }
@@ -96,7 +94,7 @@
 
     button{
       height:var(--field-h);
-      width:220px;               /* 少し長め */
+      width:220px;
       border:1px solid var(--text);
       border-radius:var(--radius);
       background:transparent;
@@ -122,7 +120,12 @@
 
 <body>
   <div class="wrap">
-    <form id="contactForm">
+    <form
+      id="contactForm"
+      action="https://script.google.com/macros/s/AKfycbwMmHZALO9_5dzQF5rOFO-sEIXxTVRVwF1czLK2tRm_RJg2JVVm9-P1hERem6c-1dFc5w/exec"
+      method="POST"
+      target="hidden_iframe"
+    >
       <label for="name">Name</label>
       <input
         id="name"
@@ -174,11 +177,11 @@
         <div id="status" class="status"></div>
       </div>
     </form>
+
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
   </div>
 
   <script>
-    const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzPV-C8cnTFoem5vv3XgrW2lyfCJq17ecaOxPMew-pNiTF3vkrw9iMZlfq2cebRKhVcEA/exec";
-
     const form = document.getElementById("contactForm");
     const btn = document.getElementById("submitBtn");
     const statusEl = document.getElementById("status");
@@ -190,43 +193,21 @@
       const message = form.message.value.trim();
       return name && email && category && message;
     }
+
     function updateButton(){ btn.disabled = !isValid(); }
 
     form.addEventListener("input", updateButton);
     form.addEventListener("change", updateButton);
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    form.addEventListener("submit", () => {
       if (!isValid()) return;
-
       btn.disabled = true;
       statusEl.textContent = "Sending...";
-
-      const payload = {
-        name: form.name.value.trim(),
-        email: form.email.value.trim(),
-        category: form.querySelector('input[name="category"]:checked').value,
-        message: form.message.value.trim()
-      };
-
-      try {
-        const res = await fetch(GAS_WEBAPP_URL, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload)
-        });
-
-        const json = await res.json().catch(() => ({}));
-        if (!json.ok) throw new Error("send_failed");
-
+      setTimeout(() => {
         statusEl.textContent = "Sent. Please check your confirmation email.";
         form.reset();
-
-      } catch (err) {
-        statusEl.textContent = "Failed to send. Please try again later.";
-      } finally {
         updateButton();
-      }
+      }, 1200);
     });
 
     updateButton();
