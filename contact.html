@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Contact</title>
+  <title>お問い合わせ</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +17,7 @@
       --fs:14pt;
       --radius:4px;
       --field-h:44px;
+      --req:#ff0000;
     }
 
     body{
@@ -38,6 +39,17 @@
       font-size:var(--fs);
       margin:14px 0 6px;
       color:var(--text);
+    }
+
+    .req{
+      color:var(--req);
+      margin-left:6px;
+    }
+
+    .hint{
+      font-size:var(--fs);
+      color:var(--placeholder);
+      margin:0 0 6px;
     }
 
     input[type="text"],
@@ -122,58 +134,59 @@
   <div class="wrap">
     <form
       id="contactForm"
-      action="https://script.google.com/macros/s/AKfycbwMmHZALO9_5dzQF5rOFO-sEIXxTVRVwF1czLK2tRm_RJg2JVVm9-P1hERem6c-1dFc5w/exec"
+      action="https://script.google.com/macros/s/AKfycbxZUGoZEg2bcgI4Okj_mswL5wseO858fTd2Oz-LX-no5xf5nQyWiqe80IJQRonlfr89sQ/exec"
       method="POST"
       target="hidden_iframe"
     >
-      <label for="name">Name</label>
+      <label for="name">お名前<span class="req">*</span></label>
       <input
         id="name"
         name="name"
         type="text"
-        placeholder="Please enter your full name."
+        placeholder="お名前（フルネーム）を入力してください。"
         required
       />
 
-      <label for="email">Email</label>
+      <label for="email">メールアドレス<span class="req">*</span></label>
       <input
         id="email"
         name="email"
         type="email"
-        placeholder="Please enter your email address."
+        placeholder="メールアドレスを入力してください。"
         required
       />
 
-      <label>Category</label>
+      <label>お問い合わせの種類<span class="req">*</span></label>
+      <div class="hint">以下から1つ選択してください。</div>
       <div class="radio-group">
         <label class="radio-item">
           <input type="radio" name="category" value="古材ご購入のご相談" required />
-          Purchase inquiry (reclaimed materials)
+          古材ご購入のご相談
         </label>
         <label class="radio-item">
           <input type="radio" name="category" value="古材レスキューご依頼" required />
-          Reclaimed material rescue request
+          古材レスキューご依頼
         </label>
         <label class="radio-item">
           <input type="radio" name="category" value="活動に関するご質問" required />
-          Questions about our activities
+          活動に関するご質問
         </label>
         <label class="radio-item">
           <input type="radio" name="category" value="その他" required />
-          Other
+          その他
         </label>
       </div>
 
-      <label for="message">Message</label>
+      <label for="message">お問い合わせ内容<span class="req">*</span></label>
       <textarea
         id="message"
         name="message"
-        placeholder="Please describe your inquiry in detail."
+        placeholder="お問い合わせ内容をできるだけ具体的にご記入ください。"
         required
       ></textarea>
 
       <div class="actions">
-        <button id="submitBtn" type="submit" disabled>Send</button>
+        <button id="submitBtn" type="submit" disabled>送信</button>
         <div id="status" class="status"></div>
       </div>
     </form>
@@ -202,9 +215,10 @@
     form.addEventListener("submit", () => {
       if (!isValid()) return;
       btn.disabled = true;
-      statusEl.textContent = "Sending...";
+      statusEl.textContent = "送信中...";
+
       setTimeout(() => {
-        statusEl.textContent = "Sent. Please check your confirmation email.";
+        statusEl.textContent = "送信しました。受付完了メールをご確認ください。";
         form.reset();
         updateButton();
       }, 1200);
